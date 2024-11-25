@@ -96,7 +96,7 @@ async function main() {
   await transaction.wait()
 
   // Investor swaps 1 token
-  transaction = await amm.connect(investor1).swapToken1(tokens(1))
+  transaction = await amm.connect(investor1).swapExactInput(tokens(1))
   await transaction.wait()
 
   /////////////////////////////////////////////////////////////
@@ -109,7 +109,7 @@ async function main() {
   await transaction.wait()
 
   // Investor swaps 1 token
-  transaction = await amm.connect(investor2).swapToken2(tokens(1))
+  transaction = await amm.connect(investor2).swapExactOutput(tokens(1))
   await transaction.wait()
 
 
@@ -124,7 +124,7 @@ async function main() {
   await transaction.wait()
 
   // Investor swaps all 10 token
-  transaction = await amm.connect(investor3).swapToken1(tokens(10))
+  transaction = await amm.connect(investor3).swapExactInput(tokens(10))
   await transaction.wait()
 
   /////////////////////////////////////////////////////////////
@@ -138,7 +138,7 @@ async function main() {
   await transaction.wait()
 
   // Investor swaps all 10 tokens
-  transaction = await amm.connect(investor4).swapToken2(tokens(5))
+  transaction = await amm.connect(investor4).swapExactOutput(tokens(5))
   await transaction.wait()
 
   console.log(`Finished.\n`)

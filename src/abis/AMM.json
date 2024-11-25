@@ -19,13 +19,75 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
         "name": "user",
         "type": "address"
       },
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "token1Amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "token2Amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "share",
+        "type": "uint256"
+      }
+    ],
+    "name": "AddLiquidity",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "token1Amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "token2Amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "share",
+        "type": "uint256"
+      }
+    ],
+    "name": "RemoveLiquidity",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
         "internalType": "address",
         "name": "tokenGive",
         "type": "address"
@@ -37,7 +99,7 @@
         "type": "uint256"
       },
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
         "name": "tokenGet",
         "type": "address"
@@ -185,7 +247,7 @@
         "type": "uint256"
       }
     ],
-    "name": "calculateWithdrawAmount",
+    "name": "calculateWithdawAmount",
     "outputs": [
       {
         "internalType": "uint256",
@@ -252,7 +314,7 @@
         "type": "uint256"
       }
     ],
-    "name": "swapToken1",
+    "name": "swapExactInput",
     "outputs": [
       {
         "internalType": "uint256",
@@ -271,7 +333,7 @@
         "type": "uint256"
       }
     ],
-    "name": "swapToken2",
+    "name": "swapExactOutput",
     "outputs": [
       {
         "internalType": "uint256",
