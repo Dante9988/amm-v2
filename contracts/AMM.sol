@@ -8,6 +8,7 @@ import "./Token.sol";
 // [] Manage Deposits
 // [] Manage Withdrawals
 // [] Facilitate Swaps
+// [] Manage withdrawals
 contract AMM {
     Token public token1;
     Token public token2;
@@ -29,6 +30,20 @@ contract AMM {
         uint token1Balance, 
         uint token2Balance,
         uint timestamp
+    );
+
+    event AddLiquidity(
+        address indexed user,
+        uint token1Amount,
+        uint token2Amount,
+        uint share
+    );
+
+    event RemoveLiquidity(
+        address indexed user,
+        uint token1Amount,
+        uint token2Amount,
+        uint share
     );
 
     constructor(Token _token1, Token _token2) {
@@ -66,6 +81,8 @@ contract AMM {
         // Update shares
         totalShares += share;
         shares[msg.sender] += share;
+
+        emit AddLiquidity(msg.sender, _token1Amount, _token2Amount, shares[msg.sender]);
     }
 
     // Determine how many token2 tokens must be deposited to get a certain amount of token1 tokens
@@ -152,5 +169,37 @@ contract AMM {
             token2Balance, 
             block.timestamp
         );
+    }
+
+    // Determine how many token1 and token2 tokens must be withdrawn for a certain pool
+    function calculateWithdawAmount(uint _share) public view returns(uint token1Amount, uint token2Amount) {
+        require(_share <= totalShares, "must be less than total shares");
+        token1Amount = (token1Balance * _share) / totalShares;
+        token2Amount = (token2Balance * _share) / totalShares;
+    }
+
+    function removeLiquidity(uint _share) external returns(uint token1Amount, uint token2Amount) {
+        require(_share <= shares[msg.sender], "cannot withdraw more than you have");
+        // Calculate token1 and token2 amounts to withdraw
+        (token1Amount, token2Amount) = calculateWithdawAmount(_share);
+
+        // Update shares
+        shares[msg.sender] -= _share;
+        totalShares -= _share;
+
+        // Update token balances
+        token1Balance -= token1Amount;
+        token2Balance -= token2Amount;
+
+        // Update K
+        K = token1Balance * token2Balance;
+
+        // Transfer tokens to user
+        require(token1.transfer(msg.sender, token1Amount), "Failed to transfer token1 to sender");
+        require(token2.transfer(msg.sender, token2Amount), "Failed to transfer token2 to sender");
+
+        // Emit event
+        emit RemoveLiquidity(msg.sender, token1Amount, token2Amount, _share);
+
     }
 }

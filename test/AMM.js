@@ -123,6 +123,15 @@ describe('AMM', () => {
       // pool should have 150 shares
       expect(await amm.totalShares()).to.eq(tokens(150));
 
+      // Check add liquidity event was emitted
+      await expect(transaction).to.emit(amm, 'AddLiquidity')
+      .withArgs(
+        liquidityProvider.address, 
+        amount, 
+        token2Deposit, 
+        await amm.shares(liquidityProvider.address)
+      );
+
       //////////////////////////////////////////////////////////////////////////////
       // Investor 1 swaps
       //////////////////////////////////////////////////////////////////////////////
@@ -292,6 +301,59 @@ describe('AMM', () => {
       // Check amm balances are in sync
       expect(await token1.balanceOf(amm.address)).to.eq(await amm.token1Balance());
       expect(await token2.balanceOf(amm.address)).to.eq(await amm.token2Balance());
+
+      //////////////////////////////////////////////////////////////////////////////
+      // Remove liquidity
+      //////////////////////////////////////////////////////////////////////////////
+
+      console.log('AMM Token1 Balance: ', ethers.utils.formatEther(await amm.token1Balance()));
+      console.log('AMM Token2 Balance: ', ethers.utils.formatEther(await amm.token2Balance()));
+
+      // LP Pool Share = 50 / 150
+      // LP Token1 Withdraw: Token1 Balance * 50 / 150
+      // LP Token2 Withdraw: Token2 Balance * 50 / 150
+
+      // Check LP balance before removing liquidity
+      balance = await token1.balanceOf(liquidityProvider.address);
+      console.log('Liquidity Provider token1 balance before removing liquidity: ', formatEther(balance));
+
+      balance = await token2.balanceOf(liquidityProvider.address);
+      console.log('Liquidity Provider token2 balance before removing liquidity: ', formatEther(balance));
+
+      let [token1Amount, token2Amount] = await amm.calculateWithdawAmount(tokens(50));
+
+      // LP removes tokens from AMM pool
+      transaction = await amm.connect(liquidityProvider).removeLiquidity(tokens(50)); // 50 shares
+      result = await transaction.wait();
+
+      // Check LP balance after removing liquidity
+      balance = await token1.balanceOf(liquidityProvider.address);
+      console.log('Liquidity Provider token1 balance after removing liquidity: ', formatEther(balance));
+
+      // Check LP token1 balance
+      expect(balance).to.eq(100033666215405943783868n)
+
+      balance = await token2.balanceOf(liquidityProvider.address);
+      console.log('Liquidity Provider token2 balance after removing liquidity: ', formatEther(balance));
+
+      // Check LP token2 balance
+      expect(balance).to.eq(99966356437622416756605n)
+
+      // Check AMM balances and pool shares are in sync
+      expect(await token1.balanceOf(amm.address)).to.eq(await amm.token1Balance());
+      expect(await token2.balanceOf(amm.address)).to.eq(await amm.token2Balance());
+      expect(await amm.shares(liquidityProvider.address)).to.eq(0);
+      expect(await amm.shares(deployer.address)).to.eq(tokens(100));
+      expect(await amm.totalShares()).to.eq(tokens(100));
+
+      // Check remove liquidity event was emitted
+      await expect(transaction).to.emit(amm, 'RemoveLiquidity')
+      .withArgs(
+        liquidityProvider.address, 
+        token1Amount,
+        token2Amount,
+        tokens(50)
+      );
 
     })
 
