@@ -1,17 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit'
-
-import provider from './reducers/provider'
-import tokens from './reducers/tokens'
-import amm from './reducers/amm'
+import { configureStore } from "@reduxjs/toolkit";
+import provider from "./reducers/provider";
 
 export const store = configureStore({
-  reducer: {
-    provider,
-    tokens,
-    amm
-  },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: false
-    })
-})
+    reducer: {
+        provider
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false,
+    }),
+});

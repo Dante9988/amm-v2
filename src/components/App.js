@@ -1,49 +1,40 @@
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { HashRouter, Routes, Route } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 import { ethers } from 'ethers'
+import { useDispatch } from 'react-redux';
 
 // Components
 import Navigation from './Navigation';
-import Tabs from './Tabs';
-import Swap from './Swap';
-import Deposit from './Deposit';
-import Withdraw from './Withdraw';
-import Charts from './Charts';
+import Loading from './Loading';
 
-import {
-  loadProvider,
-  loadNetwork,
-  loadAccount,
-  loadTokens,
-  loadAMM
-} from '../store/interactions'
+import { loadAccount, loadProvider, loadNetwork } from '../store/interactions/interactions';
+// ABIs: Import your contract ABIs here
+// import TOKEN_ABI from '../abis/Token.json'
+
+// Config: Import your network config here
+// import config from '../config.json';
+
+import { setAccount, setChainId } from '../store/reducers/provider';
 
 function App() {
+  // let account = '';
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const loadBlockchainData = async () => {
-    // Initiate provider
-    const provider = await loadProvider(dispatch)
+    try {
+      // First initialize provider
+      const provider = loadProvider(dispatch)
+      
+      // Then load account directly
+      const account = await loadAccount(dispatch)
+      
+      // Then load network
+      const chainId = await loadNetwork(provider, dispatch)
 
-    // Fetch current network's chainId (e.g. hardhat: 31337, kovan: 42)
-    const chainId = await loadNetwork(provider, dispatch)
-
-    // Reload page when network changes
-    window.ethereum.on('chainChanged', () => {
-      window.location.reload()
-    })
-
-    // Fetch current account from Metamask when changed
-    window.ethereum.on('accountsChanged', async () => {
-      await loadAccount(dispatch)
-    })
-
-    // Initiate contracts
-    await loadTokens(provider, chainId, dispatch)
-    await loadAMM(provider, chainId, dispatch)
+    } catch (error) {
+      console.error("Error:", error)
+    }
   }
 
   useEffect(() => {
@@ -52,21 +43,14 @@ function App() {
 
   return(
     <Container>
-      <HashRouter>
+      <Navigation account={"0x0"} />
 
-        <Navigation />
+      <h1 className='my-4 text-center'>React Hardhat Template</h1>
 
-        <hr />
-
-        <Tabs />
-
-        <Routes>
-          <Route exact path="/" element={<Swap />} />
-          <Route path="/deposit" element={<Deposit />} />
-          <Route path="/withdraw" element={<Withdraw />} />
-          <Route path="/charts" element={<Charts />} />
-        </Routes>
-      </HashRouter>
+      <>
+        <p className='text-center'><strong>Your ETH Balance:</strong> 1001 ETH</p>
+        <p className='text-center'>Edit App.js to add your code here.</p>
+      </>
     </Container>
   )
 }
