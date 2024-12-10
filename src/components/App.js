@@ -7,14 +7,12 @@ import { useDispatch } from 'react-redux';
 import Navigation from './Navigation';
 import Loading from './Loading';
 
-import { loadAccount, loadProvider, loadNetwork } from '../store/interactions/interactions';
+import { loadAccount, loadProvider, loadNetwork, loadTokens, loadBalances } from '../store/interactions/interactions.js';
 // ABIs: Import your contract ABIs here
 // import TOKEN_ABI from '../abis/Token.json'
 
 // Config: Import your network config here
 // import config from '../config.json';
-
-import { setAccount, setChainId } from '../store/reducers/provider';
 
 function App() {
   // let account = '';
@@ -31,6 +29,11 @@ function App() {
       
       // Then load network
       const chainId = await loadNetwork(provider, dispatch)
+      // Then load tokens
+      const tokens = await loadTokens(provider, chainId, dispatch)
+
+      // Then load balances
+      const balances = await loadBalances(provider, chainId, dispatch, account)
 
     } catch (error) {
       console.error("Error:", error)
@@ -38,7 +41,10 @@ function App() {
   }
 
   useEffect(() => {
-    loadBlockchainData()
+    const fetchData = async () => {
+      await loadBlockchainData(); // Await the loading of blockchain data
+    };
+    fetchData();
   }, []);
 
   return(
