@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import Navigation from './Navigation';
 import Loading from './Loading';
 
-import { loadAccount, loadProvider, loadNetwork, loadTokens, loadBalances } from '../store/interactions/interactions.js';
+import { loadAccount, loadProvider, loadNetwork, loadTokens, loadBalances, loadAMM } from '../store/interactions/interactions.js';
 // ABIs: Import your contract ABIs here
 // import TOKEN_ABI from '../abis/Token.json'
 
@@ -25,7 +25,8 @@ function App() {
       const provider = loadProvider(dispatch)
       
       // Then load account directly
-      const account = await loadAccount(dispatch)
+      //const account = await loadAccount(dispatch)
+      
       
       // Then load network
       const chainId = await loadNetwork(provider, dispatch)
@@ -33,7 +34,15 @@ function App() {
       const tokens = await loadTokens(provider, chainId, dispatch)
 
       // Then load balances
-      const balances = await loadBalances(provider, chainId, dispatch, account)
+      //const balances = await loadBalances(provider, chainId, dispatch, account)
+
+      window.ethereum.on('accountsChanged', async () => {
+        console.log('accountsChanged')
+        await loadAccount(dispatch);
+      })
+
+      // Then load AMM
+      const amm = await loadAMM(provider, chainId, dispatch)
 
     } catch (error) {
       console.error("Error:", error)
@@ -49,7 +58,7 @@ function App() {
 
   return(
     <Container>
-      <Navigation account={"0x0"} />
+      <Navigation />
 
       <h1 className='my-4 text-center'>React Hardhat Template</h1>
 

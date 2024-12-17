@@ -9,5 +9,16 @@
     "amm": {
       "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
     }
+  },
+  "102031": {
+    "token": {
+      "address": "0x84F615B4003Efa0C91Fe865076A7200C56FfbF2E"
+    },
+    "usd": {
+      "address": "0x144317b8d9cf233f1C346e312cD414dc398D8E2C"
+    },
+    "amm": {
+      "address": "0x4Ed657c61ACD2f4c4CF7f917E95235eD550f2449"
+    }
   }
 }

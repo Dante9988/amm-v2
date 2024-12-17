@@ -4,6 +4,7 @@ import config from '../../config.json';
 import TOKEN_ABI from '../../abis/Token.json';
 import AMM_ABI from '../../abis/AMM.json';
 import { setContracts, setSymbols, setBalances } from '../reducers/tokens';
+import { setContract, sharesLoaded } from '../reducers/amm';
 
 export const loadProvider = (dispatch) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -48,23 +49,24 @@ export const loadTokens = async (provider, chainId, dispatch) => {
   dispatch(setSymbols([ await token.symbol(), await usd.symbol() ]));
 }
 
-export const loadBalances = async (provider, chainId, dispatch, account) => {
+export const loadAMM = async (provider, chainId, dispatch) => {
+  const amm = new ethers.Contract(config[chainId].amm.address, AMM_ABI, provider);
+  dispatch(setContract(amm));
+  return amm;
+}
+
+export const loadBalances = async (amm, tokens, account, dispatch) => {
   try {
-    const tokenAddress = config[chainId].token.address;
-    const usdAddress = config[chainId].usd.address;
+    const tokenBalance = await tokens[0].balanceOf(account);
+    const usdBalance = await tokens[1].balanceOf(account);
+    dispatch(setBalances([ethers.utils.formatUnits(tokenBalance, await tokens[0].decimals()), ethers.utils.formatUnits(usdBalance, await tokens[1].decimals())]));
 
-    const token = new ethers.Contract(ethers.utils.getAddress(tokenAddress), TOKEN_ABI.abi, await provider.getSigner());
-    const usd = new ethers.Contract(ethers.utils.getAddress(usdAddress), TOKEN_ABI.abi, await provider.getSigner());
+    const shares = await amm.shares(account);
+    dispatch(sharesLoaded(ethers.utils.formatUnits(shares.toString(), 'ether')));
 
-    const tokenBalance = await token.balanceOf(account);
-    const usdBalance = await usd.balanceOf(account);
-
-    dispatch(setBalances([ethers.utils.formatUnits(tokenBalance, await token.decimals()), ethers.utils.formatUnits(usdBalance, await usd.decimals())]));
   } catch (error) {
     console.error(`Error loading balances: ${error.message}`);
   }
 };
-
-
 
   

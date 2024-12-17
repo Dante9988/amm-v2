@@ -32,6 +32,7 @@
     "redux-thunk": "^2.4.1",
     "reselect": "^4.1.6",
     "solidity-coverage": "^0.7.21",
+    "thirdweb": "^5.79.0",
     "ts-node": ">=8.0.0",
     "typechain": "^8.1.0",
     "typescript": ">=4.5.0",
@@ -43,7 +44,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "author": "gregory@dappuniversity.com",
+  "author": "xadja35@gmail.com",
   "license": "ISC",
   "eslintConfig": {
     "extends": [
