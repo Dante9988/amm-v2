@@ -1,0 +1,39 @@
+ /* Individual Tab Styles */
+  .nav-pills .nav-link {
+    color: #94a3b8 !important;
+    background: transparent !important;
+    padding: 12px 24px;
+    border-radius: 12px !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+  
+  /* Hover state */
+  .nav-pills .nav-link:hover {
+    color: #fff !important;
+    background: rgba(124, 58, 237, 0.1) !important;
+    border-color: rgba(124, 58, 237, 0.3);
+  }
+  
+  /* Active tab */
+  .nav-pills .nav-link.active {
+    background: linear-gradient(to right, #7c3aed, #6d28d9) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    border: none;
+    transform: translateY(-1px);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .nav-pills {
+      padding: 6px;
+      gap: 4px;
+    }
+  
+    .nav-pills .nav-link {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+  }

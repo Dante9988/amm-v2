@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react'
-import { Container } from 'react-bootstrap'
+import { Container, Card } from 'react-bootstrap'
 import { ethers } from 'ethers'
 import { useDispatch } from 'react-redux';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 
 // Components
 import Navigation from './Navigation';
-import Loading from './Loading';
+import Tabs from './Tabs';
+import Swap from './Swap';
+import Deposit from './Deposit';
+import Withdraw from './Withdraw';
+import Charts from './Charts';
+import '../css/App.css';
 
 import { loadAccount, loadProvider, loadNetwork, loadTokens, loadBalances, loadAMM } from '../store/interactions/interactions.js';
 // ABIs: Import your contract ABIs here
@@ -18,16 +24,16 @@ function App() {
   // let account = '';
 
   const dispatch = useDispatch();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
   const loadBlockchainData = async () => {
     try {
       // First initialize provider
       const provider = loadProvider(dispatch)
-      
-      // Then load account directly
-      //const account = await loadAccount(dispatch)
-      
-      
+    
       // Then load network
       const chainId = await loadNetwork(provider, dispatch)
       // Then load tokens
@@ -57,16 +63,19 @@ function App() {
   }, []);
 
   return(
-    <Container>
-      <Navigation />
-
-      <h1 className='my-4 text-center'>React Hardhat Template</h1>
-
-      <>
-        <p className='text-center'><strong>Your ETH Balance:</strong> 1001 ETH</p>
-        <p className='text-center'>Edit App.js to add your code here.</p>
-      </>
-    </Container>
+      <Container>
+        <HashRouter>
+          <Navigation />
+          <hr />
+          <Tabs />
+        <Routes>
+          <Route exact path="" element={<Swap />} />
+          <Route exact path="/deposit" element={<Deposit />} />
+          <Route exact path="/withdraw" element={<Withdraw />} />
+            <Route exact path="/charts" element={<Charts />} />
+          </Routes>
+        </HashRouter>
+      </Container>
   )
 }
 

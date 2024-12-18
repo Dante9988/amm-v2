@@ -1,0 +1,127 @@
+/* Navigation Styles */
+.nav-wrapper {
+    background: linear-gradient(145deg, #1a1f2e, #1e2433);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  }
+  
+  .nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 2rem;
+  }
+  
+  .nav-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 1rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .nav-logo:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Brand text with gradient */
+  .brand-text {
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    background: linear-gradient(to right, #7c3aed, #2563eb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Network selector styles */
+  .network-select {
+    max-width: 200px;
+    margin-right: 20px;
+    background: rgba(30, 41, 59, 0.8) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .network-select:hover {
+    border-color: rgba(124, 58, 237, 0.5) !important;
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+  }
+  
+  /* Account info container */
+  .account-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(30, 41, 59, 0.8);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+  }
+  
+  .account-info:hover {
+    border-color: rgba(124, 58, 237, 0.5);
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+  }
+  
+  .account-address {
+    color: #fff;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .identicon {
+    border-radius: 6px;
+    margin-left: 0.5rem;
+  }
+  
+  /* Connect button styles */
+  .connect-button {
+    background: linear-gradient(to right, #7c3aed, #6d28d9);
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .connect-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+    background: linear-gradient(to right, #8b5cf6, #7c3aed);
+  }
+  
+  .connect-button:active {
+    transform: translateY(0);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .nav-content {
+      padding: 0 1rem;
+    }
+  
+    .network-select {
+      max-width: 150px;
+      font-size: 0.9rem;
+    }
+  
+    .account-address {
+      font-size: 0.8rem;
+    }
+  
+    .connect-button {
+      padding: 0.5rem 1rem;
+    }
+  }

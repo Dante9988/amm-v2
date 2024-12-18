@@ -4,7 +4,7 @@ import config from '../../config.json';
 import TOKEN_ABI from '../../abis/Token.json';
 import AMM_ABI from '../../abis/AMM.json';
 import { setContracts, setSymbols, setBalances } from '../reducers/tokens';
-import { setContract, sharesLoaded } from '../reducers/amm';
+import { setContract, sharesLoaded, swapRequest, swapSuccess, swapComplete, swapFail } from '../reducers/amm';
 
 export const loadProvider = (dispatch) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -69,4 +69,36 @@ export const loadBalances = async (amm, tokens, account, dispatch) => {
   }
 };
 
-  
+export const swap = async (provider, amm, token, symbol, amount, dispatch) => {
+
+  dispatch(swapRequest())
+  let transaction;
+  try {
+    
+
+    // Approve the AMM to spend the token
+    transaction = await token.connect(await provider.getSigner()).approve(amm.address, amount);
+    await transaction.wait();
+
+    // Swap the token
+    if (symbol === 'DRGN') {
+      transaction = await amm.connect(await provider.getSigner()).swapExactInput(amount);
+    } else {
+      transaction = await amm.connect(await provider.getSigner()).swapExactOutput(amount);
+    }
+
+    await transaction.wait();
+    dispatch(swapSuccess(transaction.hash));
+
+
+  } catch (error) {
+    dispatch(swapFail());
+    if (error.code === 'ACTION_REJECTED') {
+      console.log('Transaction was rejected by the user.');
+    } else {
+      console.error('Error during swap:', error);
+    }
+  }
+
+
+}

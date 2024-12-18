@@ -1,0 +1,73 @@
+.alert-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 450px;
+    z-index: 1000;
+}
+
+.custom-alert {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    padding: 16px 20px;
+    margin: 0;
+}
+
+.custom-alert.alert-danger {
+    background: rgba(255, 235, 235, 0.95);
+    border-left: 4px solid #dc3545;
+}
+
+.custom-alert.alert-success {
+    background: rgba(235, 255, 235, 0.95);
+    border-left: 4px solid #198754;
+}
+
+.alert-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.alert-heading {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+    color: #1a1a1a;
+}
+
+.transaction-details {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #666;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.hash-label {
+    font-weight: 500;
+}
+
+.hash-value {
+    font-family: monospace;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.btn-close {
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.btn-close:hover {
+    opacity: 1;
+}

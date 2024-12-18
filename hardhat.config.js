@@ -14,7 +14,7 @@ module.exports = {
     cc3: {
       url: 'https://rpc.cc3-testnet.creditcoin.network',
       chainId: 102031,
-      accounts: [`${process.env.PRIVATE_KEY}`],
+      accounts: [`${process.env.PRIVATE_KEY}`, `${process.env.PRIVATE_KEY_2}`, `${process.env.PRIVATE_KEY_3}`, `${process.env.PRIVATE_KEY_4}`, `${process.env.PRIVATE_KEY_5}`],
       gas: 5000000,
       gasPrice: 20000000000,
     },
@@ -24,4 +24,22 @@ module.exports = {
       accounts: [`${process.env.PRIVATE_KEY}`],
     } 
   },
+  etherscan: {
+    apiKey: "ABCD",
+    customChains: [
+      {
+        network: "cc3",
+        chainId: 102031,
+        urls: {
+          apiURL: "https://creditcoin-testnet.blockscout.com/api",
+          browserURL: "https://creditcoin-testnet.blockscout.com/",
+        },
+      }
+    ]
+  },
+  sourcify: {
+    // Disabled by default
+    // Doesn't need an API key
+    enabled: true
+  }
 };
