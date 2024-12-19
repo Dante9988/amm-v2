@@ -57,9 +57,6 @@ const Withdraw = () => {
         e.preventDefault();
 
         setShowAlert(false);
-
-        const _shares = await amm.shares(account);
-
         
         // deposit
         await removeLiquidity(provider, amm, shares, dispatch);
@@ -68,6 +65,8 @@ const Withdraw = () => {
         await loadBalances(amm, tokens, account, dispatch);
 
         setShowAlert(true);
+        setShares(0);
+        setSharePercentage(0);
     }
 
 
