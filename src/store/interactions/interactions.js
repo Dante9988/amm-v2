@@ -126,7 +126,7 @@ export const removeLiquidity = async (provider, amm, shares, dispatch) => {
 
   let transaction;
   try {
-    transaction = await amm.connect(signer).removeLiquidity(shares, { gasLimit: 2000000 });
+    transaction = await amm.connect(signer).removeLiquidity(ethers.utils.parseUnits(shares.toString(), 'ether'), { gasLimit: 2000000 });
     await transaction.wait();
     dispatch(withdrawSuccess(transaction.hash));
   } catch (error) {

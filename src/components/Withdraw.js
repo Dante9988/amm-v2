@@ -25,9 +25,9 @@ const Withdraw = () => {
     const balances = useSelector(state => state.tokens.balances);
     const tokens = useSelector(state => state.tokens.contracts);
     const provider = useSelector(state => state.provider.connection);
-    const isDepositing = useSelector(state => state.amm.depositing.isDepositing);
-    const isSuccess = useSelector(state => state.amm.depositing.isSuccess);
-    const transactionHash = useSelector(state => state.amm.depositing.transactionHash);
+    const isWithdrawing = useSelector(state => state.amm.withdrawing.isWithdrawing);
+    const isSuccess = useSelector(state => state.amm.withdrawing.isSuccess);
+    const transactionHash = useSelector(state => state.amm.withdrawing.transactionHash);
     const sharesBalance = useSelector(state => state.amm.shares);
 
     const [shares, setShares] = useState(0);
@@ -112,8 +112,20 @@ const Withdraw = () => {
                   </InputGroup>
                 </Row>
 
+                <Row className="balance-row">
+                    <Form.Text className="balance-text">
+                        DRGN Balance: <span className="token-amount">{Number(balances[0]).toFixed(18)}</span>
+                    </Form.Text>
+                </Row>
+
+                <Row className="balance-row">
+                    <Form.Text className="balance-text">
+                        USD Balance: <span className="token-amount">{Number(balances[1]).toFixed(18)}</span>
+                    </Form.Text>
+                </Row>
+
                 <Row className="form-row">
-                {isDepositing ? (
+                {isWithdrawing ? (
                     <Spinner animation="border" style={{ display: 'block', margin: '0 auto' }} variant="secondary" />
                   ) : (
                     <Button type="submit" className="swap-button">Withdraw</Button>
@@ -128,7 +140,7 @@ const Withdraw = () => {
             )}
           </Card>
 
-          {isDepositing ? (
+          {isWithdrawing ? (
             <Alert message="Withdrawal Pending..." transactionHash={null} variant="info" setShowAlert={setShowAlert} />
           ) : isSuccess && showAlert ? (
             <Alert message="Withdrawal Successful" transactionHash={transactionHash} variant="success" setShowAlert={setShowAlert} />
