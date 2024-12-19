@@ -37,33 +37,49 @@ const Swap = () => {
 
 
     const inputHandler = async (e) => {
-        if(!inputToken || !outputToken) {
-            window.alert('Please select token')
-            return;
-        }
-
-        if(inputToken === outputToken) {
-            window.alert('Invalid token pairs')
-            return;
-        }
-
-        if(inputToken === 'DRGN') {
-            setInputAmount(e.target.value);
-
-            const _token1Amount = ethers.utils.parseUnits(e.target.value, 'ether');
-            const result = await amm.calculateToken1Swap(_token1Amount)
-            const _token2Amount = ethers.utils.formatUnits(result.toString(), 'ether');
-
-            setOutputAmount(_token2Amount.toString());
-        } else {
-            setInputAmount(e.target.value);
-
-            const _token2Amount = ethers.utils.parseUnits(e.target.value, 'ether');
-            const result = await amm.calculateToken2Swap(_token2Amount)
-            const _token1Amount = ethers.utils.formatUnits(result.toString(), 'ether');
-            setOutputAmount(_token1Amount.toString());
-        }
-    };
+      if(!inputToken || !outputToken) {
+          window.alert('Please select token')
+          return;
+      }
+  
+      if(inputToken === outputToken) {
+          window.alert('Invalid token pairs')
+          return;
+      }
+  
+      // Get the input value
+      const value = e.target.value;
+  
+      // Check if value is empty or invalid
+      if (!value || value === '') {
+          setInputAmount(0);
+          setOutputAmount(0);
+          return;
+      }
+  
+      try {
+          if(inputToken === 'DRGN') {
+              setInputAmount(value);
+  
+              const _token1Amount = ethers.utils.parseUnits(value, 'ether');
+              const result = await amm.calculateToken1Swap(_token1Amount)
+              const _token2Amount = ethers.utils.formatUnits(result.toString(), 'ether');
+  
+              setOutputAmount(_token2Amount.toString());
+          } else {
+              setInputAmount(value);
+  
+              const _token2Amount = ethers.utils.parseUnits(value, 'ether');
+              const result = await amm.calculateToken2Swap(_token2Amount)
+              const _token1Amount = ethers.utils.formatUnits(result.toString(), 'ether');
+              setOutputAmount(_token1Amount.toString());
+          }
+      } catch (error) {
+          console.log("Error in input handling:", error);
+          setInputAmount(0);
+          setOutputAmount(0);
+      }
+  };
 
     const swapHandler = async (e) => {
         e.preventDefault();

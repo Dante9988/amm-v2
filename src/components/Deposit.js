@@ -34,24 +34,45 @@ const Deposit = () => {
     const [showAlert, setShowAlert] = useState(false);
 
     const amountHandler = async (e) => {
-        if(e.target.id === 'token1') {
-            setToken1Amount(e.target.value);
-            
-            // fetch value on chain
-            const result = await amm.calculateToken2Deposit(ethers.utils.parseUnits(e.target.value, 'ether'));
-            const _token2Amount = ethers.utils.formatUnits(result.toString(), 'ether');
-
-            // set token2 amount
-            setToken2Amount(_token2Amount);
-        } else {
-            setToken2Amount(e.target.value);
-
-            // fetch value on chain
-            const result = await amm.calculateToken1Deposit(ethers.utils.parseUnits(e.target.value, 'ether'));
-            const _token1Amount = ethers.utils.formatUnits(result.toString(), 'ether');
-
-            // set token1 amount
-            setToken1Amount(_token1Amount);
+        // Get the input value
+        const value = e.target.value;
+    
+        // Check if value is empty or invalid
+        if (!value || value === '') {
+            if(e.target.id === 'token1') {
+                setToken1Amount(0);
+                setToken2Amount(0);
+            } else {
+                setToken2Amount(0);
+                setToken1Amount(0);
+            }
+            return;
+        }
+    
+        try {
+            if(e.target.id === 'token1') {
+                setToken1Amount(value);
+                
+                // fetch value on chain
+                const result = await amm.calculateToken2Deposit(ethers.utils.parseUnits(value, 'ether'));
+                const _token2Amount = ethers.utils.formatUnits(result.toString(), 'ether');
+    
+                // set token2 amount
+                setToken2Amount(_token2Amount);
+            } else {
+                setToken2Amount(value);
+    
+                // fetch value on chain
+                const result = await amm.calculateToken1Deposit(ethers.utils.parseUnits(value, 'ether'));
+                const _token1Amount = ethers.utils.formatUnits(result.toString(), 'ether');
+    
+                // set token1 amount
+                setToken1Amount(_token1Amount);
+            }
+        } catch (error) {
+            console.log("Error in amount handling:", error);
+            setToken1Amount(0);
+            setToken2Amount(0);
         }
     }
 
