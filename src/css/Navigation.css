@@ -25,20 +25,65 @@
     transform: scale(1.05);
   }
   
+  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&display=swap');
+
   /* Brand text with gradient */
   .brand-text {
-    font-size: 1.5rem !important;
-    font-weight: 600 !important;
-    background: linear-gradient(to right, #7c3aed, #2563eb);
+    font-family: 'Chakra Petch', sans-serif !important;
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    background: linear-gradient(
+      45deg,
+      #7c3aed 0%,
+      #3b82f6 50%,
+      #2563eb 100%
+    );
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
+    text-shadow: 
+      0 0 40px rgba(124, 58, 237, 0.5),
+      0 0 80px rgba(124, 58, 237, 0.3);
     padding: 0;
     margin: 0;
+    letter-spacing: 0.02em;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .brand-text::after {
+    content: 'DragonAI Swap';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      45deg,
+      #7c3aed 0%,
+      #3b82f6 50%,
+      #2563eb 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0;
+    filter: blur(8px);
+    transition: all 0.3s ease;
+  }
+  
+  .brand-text:hover {
+    transform: translateY(-1px);
+  }
+  
+  .brand-text:hover::after {
+    opacity: 0.5;
+    filter: blur(12px);
   }
   
   /* Network selector styles */
   .network-select {
+    font-family: 'Chakra Petch', sans-serif !important;
     max-width: 200px;
     margin-right: 20px;
     background: rgba(30, 41, 59, 0.8) !important;

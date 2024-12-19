@@ -1,0 +1,166 @@
+/* Container styles */
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&display=swap');
+
+.withdraw-container {
+    font-family: 'Chakra Petch', sans-serif !important;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 2rem;
+    min-height: 100vh;
+  }
+  
+  /* Card styles */
+  .withdraw-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 24px;
+    border-radius: 16px;
+    background-color: #1a1f2e;
+    border: 1px solid #2d3748;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Form styles */
+  .withdraw-form {
+    width: 100%;
+  }
+  
+  .form-row {
+    margin-bottom: 20px;
+  }
+  
+  /* Share Input Group */
+  .input-group {
+    font-family: 'Chakra Petch', sans-serif !important;
+    background-color: #1e293b;
+    border-radius: 12px;
+    border: 1px solid rgba(45, 55, 72, 0.5);
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    margin-bottom: 20px;
+  }
+  
+  .input-group:hover {
+    border-color: rgba(124, 58, 237, 0.5);
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.15);
+    transform: translateY(-1px);
+  }
+  
+  .input-group:focus-within {
+    border-color: #7c3aed;
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.2);
+    transform: translateY(-1px);
+  }
+  
+  /* Slider styles */
+  .share-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: #2d3748;
+    outline: none;
+    margin: 20px 0;
+  }
+  
+  .share-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #7c3aed;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+  }
+  
+  .share-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #7c3aed;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+  }
+  
+  .share-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    background: #6d28d9;
+  }
+  
+  .share-slider::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    background: #6d28d9;
+  }
+  
+  /* Share percentage display */
+  .share-percentage {
+    font-family: 'Chakra Petch', sans-serif !important;
+    text-align: center;
+    margin: 16px auto; /* Changed to auto for horizontal centering */
+    padding: 5px 15px; /* Added horizontal padding */
+    width: fit-content; /* Makes container fit the content */
+    min-width: 120px; /* Minimum width to prevent too narrow display */
+    background: linear-gradient(
+      135deg,
+      rgba(124, 58, 237, 0.1) 0%,
+      rgba(124, 58, 237, 0.05) 100%
+    );
+    border-radius: 8px;
+    color: #cbd5e1;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border: 1px solid rgba(124, 58, 237, 0.1);
+    display: inline-block; /* Makes it behave like inline element but allows width/height */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Withdraw button */
+  .withdraw-button {
+    font-family: 'Chakra Petch', sans-serif !important;
+    width: 100%;
+    padding: 12px;
+    background-color: #7c3aed;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 16px;
+  }
+  
+  .withdraw-button:hover {
+    background-color: #6d28d9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.15);
+  }
+  
+  /* Balance display */
+  .balance-display {
+    font-family: 'Chakra Petch', sans-serif !important;
+    color: #cbd5e1 !important;
+    font-size: 0.95rem;
+    font-weight: 500;
+    opacity: 0.9;
+    text-align: right;
+    margin-bottom: 8px;
+  }
+  
+  /* Connect wallet message */
+  .connect-wallet-message {
+    font-family: 'Chakra Petch', sans-serif !important;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }

@@ -1,5 +1,8 @@
  /* Individual Tab Styles */
+ @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&display=swap');
+
   .nav-pills .nav-link {
+    font-family: 'Chakra Petch', sans-serif !important;
     color: #94a3b8 !important;
     background: transparent !important;
     padding: 12px 24px;
@@ -18,6 +21,7 @@
   
   /* Active tab */
   .nav-pills .nav-link.active {
+    font-family: 'Chakra Petch', sans-serif !important;
     background: linear-gradient(to right, #7c3aed, #6d28d9) !important;
     color: white !important;
     box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
@@ -37,3 +41,5 @@
       font-size: 0.9rem;
     }
   }
+
+  

@@ -261,9 +261,9 @@ const Swap = () => {
               <Form onSubmit={swapHandler} className="swap-form">
                 <Row className="form-row">
                   <div className="form-header">
-                    <Form.Label><strong>Input:</strong></Form.Label>
+                    <Form.Label style={{ fontSize: '1.2rem', fontWeight: '600', color: '#ffffff' }}>Pay:</Form.Label>
                     <Form.Text muted>
-                      Balance: {inputToken === symbols[0] ? balances[0] : inputToken === symbols[1] ? balances[1] : '0'}
+                      Balance: {inputToken === symbols[0] ? Number(balances[0]).toFixed(2) : inputToken === symbols[1] ? Number(balances[1]).toFixed(2) : '0'}
                     </Form.Text>
                   </div>
                   <InputGroup>
@@ -299,9 +299,9 @@ const Swap = () => {
     
                 <Row className="form-row">
                   <div className="form-header">
-                    <Form.Label><strong>Output:</strong></Form.Label>
+                    <Form.Label style={{ fontSize: '1.2rem', fontWeight: '600', color: '#ffffff' }}>Receive:</Form.Label>
                     <Form.Text muted>
-                      Balance: {outputToken === symbols[0] ? balances[0] : outputToken === symbols[1] ? balances[1] : '0'}
+                      Balance: {outputToken === symbols[0] ? Number(balances[0]).toFixed(2) : outputToken === symbols[1] ? Number(balances[1]).toFixed(2) : '0'}
                     </Form.Text>
                   </div>
                   <InputGroup>
@@ -330,7 +330,7 @@ const Swap = () => {
                     <Button type="submit" className="swap-button">Swap</Button>
                   )}
                   <Form.Text muted className="exchange-rate">
-                    Exchange Rate: {price}
+                    Exchange Rate: {Number(price).toFixed(6)} {inputToken === 'DRGN' ? 'USD per 1 DRGN' : 'DRGN per 1 USD'}
                   </Form.Text>
                 </Row>
               </Form>

@@ -1,4 +1,6 @@
 /* Container styles */
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&display=swap');
+
 .swap-container {
   display: flex;
   justify-content: center;
@@ -43,6 +45,7 @@
 /* Balance text */
 .balance-text,
 .form-text {
+  font-family: 'Chakra Petch', sans-serif !important;
   color: #cbd5e1 !important; /* Much lighter gray */
   font-size: 0.95rem;
   font-weight: 500;
@@ -51,13 +54,47 @@
 
 /* Input group styles */
 .input-group {
+  font-family: 'Chakra Petch', sans-serif !important;
   background-color: #1e293b;
-  border-radius: 8px;
-  border: 1px solid #2d3748;
+  border-radius: 12px;
+  border: 1px solid rgba(45, 55, 72, 0.5);
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.input-group:hover {
+  border-color: rgba(124, 58, 237, 0.5);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.15);
+  transform: translateY(-1px);
+}
+
+.input-group:focus-within {
+  border-color: #7c3aed;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Optional: Add a subtle gradient overlay */
+.input-group::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  border-radius: 12px;
 }
 
 /* Input field styles */
 .form-control {
+  font-family: 'Chakra Petch', sans-serif !important;
   background-color: transparent !important;
   border: none !important;
   color: #ffffff !important;
@@ -88,6 +125,7 @@ input[type="number"] {
 
 /* Dropdown styles */
 .dropdown-button {
+  font-family: 'Chakra Petch', sans-serif !important;
   background-color: #1e293b !important;
   border: 1px solid #2d3748 !important;
   color: #ffffff !important;
@@ -140,9 +178,11 @@ input[type="number"] {
 
 /* Swap button styles */
 .swap-button {
+  font-family: 'Chakra Petch', sans-serif !important;
   width: 100%;
   padding: 12px;
   background-color: #7c3aed;
+  box-shadow: 0 4px 20px rgba(141, 39, 209, 0.568);
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -160,12 +200,34 @@ input[type="number"] {
 
 /* Exchange rate styles */
 .exchange-rate {
+  font-family: 'Chakra Petch', sans-serif !important;
   text-align: center;
-  color: #cbd5e1 !important; /* Same lighter gray */
   margin-top: 16px;
+  padding: 8px 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(124, 58, 237, 0.1) 0%,
+    rgba(124, 58, 237, 0.05) 100%
+  );
+  border-radius: 8px;
+  color: #cbd5e1 !important;
   font-size: 0.95rem;
   font-weight: 500;
-  opacity: 0.9;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(124, 58, 237, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.exchange-rate:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(124, 58, 237, 0.15) 0%,
+    rgba(124, 58, 237, 0.08) 100%
+  );
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.15);
 }
 
 /* Loading spinner */
@@ -175,6 +237,7 @@ input[type="number"] {
 
 /* Connect wallet message */
 .connect-wallet-message {
+  font-family: 'Chakra Petch', sans-serif !important;
   color: #ffffff;
   text-align: center;
   padding: 20px;
@@ -184,6 +247,7 @@ input[type="number"] {
 
 /* Balance display */
 .balance-display {
+  font-family: 'Chakra Petch', sans-serif !important;
   color: #cbd5e1 !important;
   font-size: 0.95rem;
   font-weight: 500;
@@ -192,6 +256,7 @@ input[type="number"] {
 
 /* Token amounts */
 .token-amount {
+  font-family: 'Chakra Petch', sans-serif !important;
   color: #ffffff !important;
   font-size: 1.1rem;
   font-weight: 500;
@@ -199,6 +264,7 @@ input[type="number"] {
 
 /* Token symbols */
 .token-symbol {
+  font-family: 'Chakra Petch', sans-serif !important;
   color: #ffffff !important;
   font-weight: 500;
 }

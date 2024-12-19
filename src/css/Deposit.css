@@ -1,0 +1,224 @@
+/* Container styles */
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&display=swap');
+
+.swap-container {
+    font-family: 'Chakra Petch', sans-serif !important;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 2rem;
+    min-height: 100vh;
+  }
+  
+  /* Card styles */
+  .swap-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 24px;
+    border-radius: 16px;
+    background-color: #1a1f2e;
+    border: 1px solid #2d3748;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Form styles */
+  .form-row {
+    margin-bottom: 20px;
+  }
+  
+  /* Header styles (Input/Output labels and balances) */
+  .form-header {
+    font-family: 'Chakra Petch', sans-serif !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  /* Input/Output Labels */
+  .form-header strong,
+  .input-label,
+  .output-label {
+    font-family: 'Chakra Petch', sans-serif !important;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  /* Balance text */
+  .balance-text,
+  .form-text {
+    font-family: 'Chakra Petch', sans-serif !important;
+    color: #cbd5e1 !important; /* Much lighter gray */
+    font-size: 0.95rem;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+  
+  /* Input group styles */
+  .input-group {
+    font-family: 'Chakra Petch', sans-serif !important;
+    background-color: #1e293b;
+    border-radius: 8px;
+    border: 1px solid #2d3748;
+  }
+  
+  /* Input field styles */
+  .form-control {
+    font-family: 'Chakra Petch', sans-serif !important;
+    background-color: transparent !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-size: 1.1rem;
+    padding: 12px;
+    font-weight: 500;
+  }
+  
+  .form-control::placeholder {
+    font-family: 'Chakra Petch', sans-serif !important;
+    color: #64748b !important;
+  }
+  
+  .form-control:focus {
+    box-shadow: none !important;
+    background-color: transparent !important;
+  }
+  
+  /* Remove number input spinners */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  
+  /* Dropdown styles */
+  .dropdown-button {
+    font-family: 'Chakra Petch', sans-serif !important;
+    background-color: #1e293b !important;
+    border: 1px solid #2d3748 !important;
+    color: #ffffff !important;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+  
+  .dropdown-menu {
+    font-family: 'Chakra Petch', sans-serif !important;
+    background-color: #1e293b !important;
+    border: 1px solid #2d3748 !important;
+    border-radius: 8px;
+    margin-top: 4px;
+  }
+  
+  .dropdown-item {
+    font-family: 'Chakra Petch', sans-serif !important;
+    color: #ffffff !important;
+    padding: 8px 16px;
+    font-weight: 500;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #2d3748 !important;
+  }
+  
+  /* Switch button styles */
+  .switch-row {
+    display: flex;
+    justify-content: center;
+    padding: 16px 0;
+  }
+  
+  .switch-button {
+    font-family: 'Chakra Petch', sans-serif !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #1e293b;
+    border: 1px solid #2d3748;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .switch-button:hover {
+    background-color: #2d3748;
+    transform: scale(1.05);
+  }
+  
+  /* Swap button styles */
+  .swap-button {
+    font-family: 'Chakra Petch', sans-serif !important;
+    width: 100%;
+    padding: 12px;
+    background-color: #7c3aed;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 16px;
+  }
+  
+  .swap-button:hover {
+    background-color: #6d28d9;
+    transform: translateY(-1px);
+  }
+  
+  /* Exchange rate styles */
+  .exchange-rate {
+    font-family: 'Chakra Petch', sans-serif !important;
+    text-align: center;
+    color: #cbd5e1 !important; /* Same lighter gray */
+    margin-top: 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+  
+  /* Loading spinner */
+  .loading-spinner {
+    color: #7c3aed;
+  }
+  
+  /* Connect wallet message */
+  .connect-wallet-message {
+    font-family: 'Chakra Petch', sans-serif !important;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+  
+  /* Balance display */
+  .balance-display {
+    font-family: 'Chakra Petch', sans-serif !important;
+    color: #cbd5e1 !important;
+    font-size: 0.95rem;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+  
+  /* Token amounts */
+  .token-amount {
+    font-family: 'Chakra Petch', sans-serif !important;
+    color: #ffffff !important;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+  
+  /* Token symbols */
+  .token-symbol {
+    font-family: 'Chakra Petch', sans-serif !important;
+    color: #ffffff !important;
+    font-weight: 500;
+  }
+  

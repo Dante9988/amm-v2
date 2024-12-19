@@ -10,6 +10,16 @@ export const amm = createSlice({
             isSwapping: false,
             isSuccess: false,
             transactionHash: null
+        },
+        depositing: {
+            isDepositing: false,
+            isSuccess: false,
+            transactionHash: null
+        },
+        withdrawing: {
+            isWithdrawing: false,
+            isSuccess: false,
+            transactionHash: null
         }
     },
     reducers: {
@@ -18,6 +28,36 @@ export const amm = createSlice({
         },
         sharesLoaded: (state, action) => {
             state.shares = action.payload
+        },
+        depositRequest: (state) => {
+            state.depositing.isDepositing = true
+            state.depositing.isSuccess = false
+            state.depositing.transactionHash = null
+        },
+        depositSuccess: (state, action) => {
+            state.depositing.isDepositing = false
+            state.depositing.isSuccess = true
+            state.depositing.transactionHash = action.payload
+        },
+        depositFail: (state) => {
+            state.depositing.isDepositing = false
+            state.depositing.isSuccess = false
+            state.depositing.transactionHash = null
+        },
+        withdrawRequest: (state) => {
+            state.withdrawing.isWithdrawing = true
+            state.withdrawing.isSuccess = false
+            state.withdrawing.transactionHash = null
+        },
+        withdrawSuccess: (state, action) => {
+            state.withdrawing.isWithdrawing = false
+            state.withdrawing.isSuccess = true
+            state.withdrawing.transactionHash = action.payload
+        },
+        withdrawFail: (state) => {
+            state.withdrawing.isWithdrawing = false
+            state.withdrawing.isSuccess = false
+            state.withdrawing.transactionHash = null
         },
         swapRequest: (state) => {
             state.swapping.isSwapping = true
@@ -38,10 +78,11 @@ export const amm = createSlice({
             state.swapping.isSwapping = false;
             state.swapping.isSuccess = false;
             state.swapping.transactionHash = null;
-        }
+        },
+
     },
 });
 
-export const {  setContract, sharesLoaded, swapRequest, swapSuccess, swapComplete, swapFail } = amm.actions;
+export const {  setContract, sharesLoaded, swapRequest, swapSuccess, swapComplete, swapFail, depositRequest, depositSuccess, depositFail, withdrawRequest, withdrawSuccess, withdrawFail } = amm.actions;
 
 export default amm.reducer;
