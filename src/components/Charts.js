@@ -9,6 +9,7 @@ import { ethers } from 'ethers';
 import Loading from './Loading';
 import { loadAllSwaps, loadOlderSwaps, loadRecentSwaps } from '../store/interactions/interactions';
 import '../css/Charts.css';
+import PriceChart from './PriceCharts';
 
 
 const Charts = () => {
@@ -262,6 +263,7 @@ const Charts = () => {
     
     return (
         <div className="charts-container">
+            <PriceChart />
             <div className="transactions-header">
                 <h3>Recent Transactions</h3>
                 <div className="transaction-count">

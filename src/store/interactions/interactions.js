@@ -323,3 +323,19 @@ export const loadOlderSwaps = async (provider, amm, account, dispatch, fromCurre
     }
 }
 
+export const getPrice = async (amm) => {
+  try {
+      const token1Balance = await amm.token1Balance();
+      const token2Balance = await amm.token2Balance();
+      
+      // Assuming token2 is USDC/USDT (stablecoin)
+      // Convert to proper decimal places (e.g., USDC has 6 decimals)
+      const price = (token2Balance / 1e18) / (token1Balance / 1e18);
+      
+      return price;
+  } catch (error) {
+      console.error("Error getting price:", error);
+      return 0;
+  }
+}
+

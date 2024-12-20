@@ -116,8 +116,6 @@ const Swap = () => {
         } else {
             setPrice(await amm.token1Balance() / await amm.token2Balance());
         }
-    
-
     }
 
     useEffect(() => {
