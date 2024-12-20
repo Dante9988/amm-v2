@@ -1,0 +1,513 @@
+/* Main container */
+.charts-container {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    min-height: fit-content;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #1a1f2e;
+    border-radius: 16px;
+    border: 1px solid rgba(124, 58, 237, 0.1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+.charts-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px; /* Adjust height of fade */
+    background: linear-gradient(
+        to bottom,
+        rgba(26, 31, 46, 0) 0%,
+        rgba(26, 31, 46, 1) 100%
+    );
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    pointer-events: none; /* Allows clicking through the gradient */
+}
+
+/* Header styling */
+.transactions-header {
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
+}
+
+.transactions-header h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+/* Transaction card */
+.transaction-card {
+    padding: 1.5rem;
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(124, 58, 237, 0.1);
+    animation: slideDown 0.2s ease-out;
+}
+
+.transaction-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(124, 58, 237, 0.3);
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.1);
+}
+
+/* Main transaction content */
+.transaction-main {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+/* Transaction type section */
+.transaction-type {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #cbd5e1;
+    min-width: 80px;
+}
+
+.swap-icon {
+    color: #7c3aed;
+    font-size: 1.2rem;
+}
+
+/* Transaction amounts section */
+.transaction-amounts {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+    padding: 0 1rem;
+    flex: 1;
+    justify-content: center;
+}
+
+/* Arrow styling */
+.arrow {
+    color: #7c3aed;
+    font-size: 1.2rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Amount containers */
+.amount-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    background: rgba(124, 58, 237, 0.1);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(124, 58, 237, 0.1);
+    transition: all 0.2s ease;
+    width: 280px;
+}
+
+.amount-container:hover {
+    background: rgba(124, 58, 237, 0.15);
+    border-color: rgba(124, 58, 237, 0.2);
+}
+
+/* Amount from/to containers */
+.amount-from, .amount-to {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+/* Amount styling */
+.amount {
+    color: #fff;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    letter-spacing: -0.02em;
+}
+
+/* Token address styling */
+.token-address {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    opacity: 0.8;
+}
+
+/* Transaction details section */
+.transaction-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.detail {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.detail-icon {
+    color: #7c3aed;
+    font-size: 1.1rem;
+}
+
+/* Transaction hash section */
+.transaction-hash {
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+.transaction-hash a {
+    color: #7c3aed;
+    text-decoration: none;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.transaction-hash a:hover {
+    color: #9f67ff;
+}
+
+/* Scrollbar styling */
+.transactions-list {
+    overflow-y: auto;
+    padding: 0.5rem;
+    height: auto;
+}
+
+.transactions-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.transactions-list::-webkit-scrollbar-track {
+    background: rgba(30, 41, 59, 0.7);
+    border-radius: 4px;
+}
+
+.transactions-list::-webkit-scrollbar-thumb {
+    background: rgba(124, 58, 237, 0.3);
+    border-radius: 4px;
+}
+
+.transactions-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(124, 58, 237, 0.5);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .transaction-main {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .transaction-details {
+        justify-content: flex-start;
+    }
+
+    .amount-container {
+        max-width: 100%;
+    }
+}
+
+.transactions-table {
+    background: rgba(30, 41, 59, 0.7);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr 180px 140px 40px;
+    padding: 1rem;
+    background: rgba(124, 58, 237, 0.1);
+    border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.header-cell {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.transaction-row-container {
+    border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+.transaction-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr 180px 140px 40px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    align-items: center;
+}
+
+.transaction-row:hover {
+    background: rgba(124, 58, 237, 0.05);
+}
+
+.cell {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.expand-icon {
+    color: #7c3aed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.transaction-count {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+/* Modify your existing transaction card styles */
+.transaction-card {
+    padding: 1.5rem;
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(124, 58, 237, 0.1);
+    animation: slideDown 0.2s ease-out;
+}
+
+/* Animation for expand/collapse */
+.transaction-card {
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.see-more-container {
+    position: relative;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    z-index: 1; /* Place above the fade gradient */
+}
+
+.see-more-button {
+    background: rgba(124, 58, 237, 0.1);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    color: #7c3aed;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.see-more-button:hover {
+    background: rgba(124, 58, 237, 0.15);
+    border-color: rgba(124, 58, 237, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(124, 58, 237, 0.15);
+}
+
+.see-more-button:active {
+    transform: translateY(0);
+}
+
+.table-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.loading-progress {
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+.progress-text {
+    color: #7c3aed;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.progress-details {
+    color: #94a3b8;
+    font-size: 0.8rem;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    gap: 1rem;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(124, 58, 237, 0.1);
+    border-radius: 50%;
+    border-top-color: #7c3aed;
+    animation: spin 1s ease-in-out infinite;
+}
+
+.loading-text {
+    color: #94a3b8;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.loading-dots span {
+    opacity: 0;
+    animation: dots 1.4s infinite;
+    color: #7c3aed;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dots {
+    0%, 20% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-2px);
+    }
+    80%, 100% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+}
+
+.amount-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: rgba(124, 58, 237, 0.1);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    min-width: 200px;
+    transition: all 0.2s ease;
+}
+
+.amount-container:hover {
+    background: rgba(124, 58, 237, 0.15);
+    border-color: rgba(124, 58, 237, 0.3);
+    transform: translateY(-1px);
+}
+
+.amount {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.token-address {
+    color: #94a3b8;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 0.25rem 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    cursor: default;
+}
+
+.arrow {
+    color: #7c3aed;
+    font-size: 1.5rem;
+}
+
+.transaction-hash {
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+.explorer-link {
+    color: #7c3aed;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    background: rgba(124, 58, 237, 0.1);
+}
+
+.explorer-link:hover {
+    background: rgba(124, 58, 237, 0.15);
+    color: #9f67ff;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.explorer-link.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(148, 163, 184, 0.1);
+    color: #94a3b8;
+}

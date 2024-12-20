@@ -16,7 +16,13 @@ import {
   depositFail, 
   withdrawRequest, 
   withdrawSuccess, 
-  withdrawFail 
+  withdrawFail,
+  swapsLoaded,
+  swapsLoading,
+  loadingOlderSwaps,
+  olderSwapsLoaded,
+  swapsError,
+  loadingComplete
 } from '../reducers/amm';
 
 export const loadProvider = (dispatch) => {
@@ -168,6 +174,152 @@ export const swap = async (provider, amm, token, symbol, amount, dispatch) => {
       console.error('Error during swap:', error);
     }
   }
-
-
 }
+
+
+export const loadAllSwaps = async (provider, amm, account, dispatch) => {
+
+  console.log(`account: ${account}`);
+
+  try {
+    // fetch swaps from blockchain
+    const swapStream = await amm.queryFilter(
+      amm.filters.Swap(account, null, null, null, null, null, null, null),
+      0,
+      await provider.getBlockNumber()
+    );
+
+    const swaps = swapStream.map(event => {
+      return {
+        hash: event.transactionHash,
+        user: event.args.user,
+        tokenGive: event.args.tokenGive,
+        tokenGiveAmount: event.args.tokenGiveAmount.toString(),
+        tokenGet: event.args.tokenGet,
+        tokenGetAmount: event.args.tokenGetAmount.toString(),
+        timestamp: new Date(event.args.timestamp.toNumber() * 1000).toLocaleString()
+      };
+    });
+
+    dispatch(swapsLoaded(swaps));
+
+  } catch (error) {
+    console.error("Error loading all swaps:", error);
+  }
+}
+
+export const loadRecentSwaps = async (provider, amm, account, dispatch) => {
+  try {
+      dispatch(swapsLoading());
+
+      const INITIAL_LOAD_BLOCKS = 10000;
+      const currentBlock = await provider.getBlockNumber();
+      const fromBlock = Math.max(0, currentBlock - INITIAL_LOAD_BLOCKS);
+
+      const swapStream = await amm.queryFilter(
+          amm.filters.Swap(account, null, null, null, null, null, null, null),
+          fromBlock,
+          currentBlock
+      );
+
+      const swaps = swapStream.map(event => ({
+          hash: event.transactionHash,
+          user: event.args.user,
+          tokenGive: event.args.tokenGive,
+          tokenGiveAmount: event.args.tokenGiveAmount.toString(),
+          tokenGet: event.args.tokenGet,
+          tokenGetAmount: event.args.tokenGetAmount.toString(),
+          timestamp: new Date(event.args.timestamp.toNumber() * 1000).toLocaleString(),
+          blockNumber: event.blockNumber
+      }));
+
+      dispatch(swapsLoaded(swaps));
+
+      // Start loading older swaps
+      loadOlderSwaps(provider, amm, account, dispatch, fromBlock);
+
+  } catch (error) {
+      console.error("Error loading recent swaps:", error);
+      dispatch(swapsError(error.message));
+  }
+}
+
+export const loadOlderSwaps = async (provider, amm, account, dispatch, fromCurrentBlock) => {
+    try {
+        // Initial small batch size for quick response
+        let BATCH_SIZE = 100;
+        const DELAY_BETWEEN_BATCHES = 1000; // 1 second delay
+        let emptyBatchesCount = 0;
+        const MAX_EMPTY_BATCHES = 10; // Stop after 10 consecutive empty batches
+
+        // Load older swaps in batches
+        for (let fromBlock = fromCurrentBlock - BATCH_SIZE; fromBlock >= 0; fromBlock -= BATCH_SIZE) {
+            const toBlock = Math.max(0, fromBlock + BATCH_SIZE - 1);
+            
+            // Update loading progress
+            dispatch(loadingOlderSwaps({ 
+                fromBlock, 
+                toBlock,
+                currentProgress: Math.floor(((fromCurrentBlock - fromBlock) / fromCurrentBlock) * 100)
+            }));
+
+            try {
+                const swapStream = await amm.queryFilter(
+                    amm.filters.Swap(account, null, null, null, null, null, null, null),
+                    fromBlock,
+                    toBlock
+                );
+
+                // If no transactions found, increment empty batches counter
+                if (swapStream.length === 0) {
+                    emptyBatchesCount++;
+                    
+                    // Increase batch size after each empty batch
+                    if (BATCH_SIZE < 10000) {
+                        BATCH_SIZE = Math.min(10000, BATCH_SIZE * 10);
+                        console.log(`Increasing batch size to ${BATCH_SIZE}`);
+                    }
+
+                    // Stop if we've seen too many empty batches
+                    if (emptyBatchesCount >= MAX_EMPTY_BATCHES) {
+                        console.log('Stopping search: Too many empty batches');
+                        break;
+                    }
+                } else {
+                    // Reset empty batches counter if we found transactions
+                    emptyBatchesCount = 0;
+                    
+                    const batchSwaps = swapStream.map(event => ({
+                        hash: event.transactionHash,
+                        user: event.args.user,
+                        tokenGive: event.args.tokenGive,
+                        tokenGiveAmount: event.args.tokenGiveAmount.toString(),
+                        tokenGet: event.args.tokenGet,
+                        tokenGetAmount: event.args.tokenGetAmount.toString(),
+                        timestamp: new Date(event.args.timestamp.toNumber() * 1000).toLocaleString(),
+                        blockNumber: event.blockNumber
+                    }));
+
+                    dispatch(olderSwapsLoaded(batchSwaps));
+                }
+
+                // Break if we've reached the beginning
+                if (fromBlock <= 0) break;
+
+                // Add delay between batches
+                await new Promise(resolve => setTimeout(resolve, DELAY_BETWEEN_BATCHES));
+
+            } catch (error) {
+                console.error(`Error loading batch ${fromBlock}-${toBlock}:`, error);
+                continue;
+            }
+        }
+
+        dispatch(loadingComplete());
+
+    } catch (error) {
+        console.error("Error in loadOlderSwaps:", error);
+        dispatch(swapsError(error.message));
+    }
+}
+

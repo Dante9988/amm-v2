@@ -6,6 +6,16 @@ export const amm = createSlice({
         contract: [],
         shares: 0,
         swaps: [],
+        swapLoading: {
+            isLoading: false,          // Initial loading state
+            isLoadingOlder: false,     // Background loading state
+            loadingProgress: {         // Track loading progress
+                fromBlock: 0,
+                toBlock: 0,
+                currentProgress: 0
+            },
+            error: null               // Store any loading errors
+        },
         swapping: {
             isSwapping: false,
             isSuccess: false,
@@ -79,10 +89,78 @@ export const amm = createSlice({
             state.swapping.isSuccess = false;
             state.swapping.transactionHash = null;
         },
+        swapsLoading: (state) => {
+            state.swapLoading.isLoading = true;
+            state.swapLoading.error = null;
+        },
+        swapsLoaded: (state, action) => {
+            state.swaps = action.payload;
+            state.swapLoading.isLoading = false;
+        },
+        loadingOlderSwaps: (state, action) => {
+            state.swapLoading.isLoadingOlder = true;
+            state.swapLoading.loadingProgress = action.payload;
+            state.swapLoading.error = null;
+        },
+        olderSwapsLoaded: (state, action) => {
+            // Combine new swaps with existing ones
+            const allSwaps = [...state.swaps, ...action.payload];
+            
+            // Remove duplicates and sort by timestamp
+            state.swaps = Array.from(
+                new Map(allSwaps.map(swap => [swap.hash, swap])).values()
+            ).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        },
+        loadingComplete: (state) => {
+            state.swapLoading.isLoadingOlder = false;
+            state.swapLoading.loadingProgress = {
+                fromBlock: 0,
+                toBlock: 0,
+                currentProgress: 100
+            };
+        },
+        swapsError: (state, action) => {
+            state.swapLoading.isLoading = false;
+            state.swapLoading.isLoadingOlder = false;
+            state.swapLoading.error = action.payload;
+        },
+        clearSwaps: (state) => {
+            state.swaps = [];
+            state.swapLoading = {
+                isLoading: false,
+                isLoadingOlder: false,
+                loadingProgress: {
+                    fromBlock: 0,
+                    toBlock: 0,
+                    currentProgress: 0
+                },
+                error: null
+            };
+        }
 
     },
 });
 
-export const {  setContract, sharesLoaded, swapRequest, swapSuccess, swapComplete, swapFail, depositRequest, depositSuccess, depositFail, withdrawRequest, withdrawSuccess, withdrawFail } = amm.actions;
+export const {  
+    setContract, 
+    sharesLoaded, 
+    swapRequest, 
+    swapSuccess, 
+    swapComplete, 
+    swapFail, 
+    depositRequest, 
+    depositSuccess, 
+    depositFail, 
+    withdrawRequest, 
+    withdrawSuccess, 
+    withdrawFail, 
+    swapsLoaded, 
+    swapsLoading, 
+    loadingOlderSwaps, 
+    olderSwapsLoaded, 
+    swapsError,
+    loadingComplete,
+    clearSwaps
+} = amm.actions;
 
 export default amm.reducer;
