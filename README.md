@@ -40,7 +40,7 @@ This project is an implementation of an Automated Market Maker (AMM) using the H
    Create a `.env` file in the root directory and add your configuration settings. For example:
 
    ```plaintext
-   INFURA_API_KEY=your_infura_api_key
+   ALCHEMY_API_KEY=your_alchemy_api_key
    PRIVATE_KEY=your_wallet_private_key
    ```
 

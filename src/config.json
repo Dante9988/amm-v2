@@ -12,13 +12,13 @@
   },
   "102031": {
     "token": {
-      "address": "0x84F615B4003Efa0C91Fe865076A7200C56FfbF2E"
+      "address": "0x573f5835E281514F503d8064dbdF9F86f4EC52ea"
     },
     "usd": {
-      "address": "0x144317b8d9cf233f1C346e312cD414dc398D8E2C"
+      "address": "0xE5a48613D41B8Df0A2680332bD525ff02bbA7de1"
     },
     "amm": {
-      "address": "0x4Ed657c61ACD2f4c4CF7f917E95235eD550f2449"
+      "address": "0xa618152FE68428A70aE78bE0A983a37Dd1eeAF7a"
     }
   }
 }
